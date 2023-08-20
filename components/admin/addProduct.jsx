@@ -19,21 +19,17 @@ const AddStocksForm = () => {
 
 
     const handleProductSubmit = (e) => {
-        console.log(ProductImage, "coming image from product submit");
-        console.log(data, "data coming from add product submit function");
         e.preventDefault()
         try {
             const formData = new FormData();
             formData.append('file', ProductImage);
             formData.append('upload_preset', 'ypnvfoyt');
             console.log(formData, "error occurr");
-            api.post('https://api.cloudinary.com/v1_1/dz9pszn6y/image/upload', formData,{
-             withCredentials:false
+            api.post('https://api.cloudinary.com/v1_1/dz9pszn6y/image/upload', formData, {
+                withCredentials: false
             }).then(async (response) => {
-                console.log(response, "lllllllll0000099999999999999");
                 let url = response.data.secure_url;
                 if (url === prevUrl) {
-                    console.log('Image already exists');
                     return false;
                 } else {
                     const newData = {
@@ -44,7 +40,6 @@ const AddStocksForm = () => {
                         image: response.data.secure_url
                     }
                     setPrevUrl(response.data.secure_url)
-                    console.log(response.data.secure_url, "url coming to the front end set aauuuu");
                     addProductApi(newData)
                 }
 
@@ -60,12 +55,11 @@ const AddStocksForm = () => {
 
         }
     }
-    const addProductApi = async(data) =>{
-       const response = await ADDPRODUCT_API(data)
-       console.log("api calling succefully",response);
-       if(response){
-        router.push('/allProduct')
-       }
+    const addProductApi = async (data) => {
+        const response = await ADDPRODUCT_API(data)
+        if (response) {
+            router.push('/allProduct')
+        }
     }
     /// add product in forntend area using mui ///
     return (

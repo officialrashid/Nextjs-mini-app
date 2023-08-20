@@ -11,31 +11,55 @@ import { useDispatch, useSelector } from "react-redux";
 import { LOGIN_API } from "@/utils/baseUrl/methods/post";
 // import { useRouter } from 'next/router';
 import { useRouter } from "next/navigation";
-import{
+import {
     setLoginEmail,
     setLoginPassword,
 } from "../../app/redux-toolkit/loginReducer"
-import {isUser,addUserInfo} from "../../app/redux-toolkit/registerReducer"
+import { isUser, addUserInfo } from "../../app/redux-toolkit/registerReducer"
+import { useState } from "react";
 export default function Login() {
+    const [errors, setErrors] = useState({});
     const data = useSelector((state) => state.login);
-   const dispatch = useDispatch();
-  const router = useRouter();
-  const handleLoginSubmit = async(e) =>{
-    e.preventDefault()
-   try{
-    console.log(data,"//////////////////");
-    const response = await LOGIN_API(data)
-     console.log(response.data.accessToken,"]]]]]]");
-     console.log(response.data.userInfo,"PPPPP");
-     localStorage.setItem('userAccessToken', response?.data?.accessToken)
-     dispatch(isUser(response?.data?.accessToken))
-     dispatch(addUserInfo(response?.data?.userInfo))
-     router.push('/'); 
-   } catch(error){
-    console.log(error,"error in the login page");
-   }
-   
-}
+    const dispatch = useDispatch();
+    const router = useRouter();
+    const handleLoginSubmit = async (e) => {
+        if (validateForm()) {
+            e.preventDefault()
+            try {
+                const response = await LOGIN_API(data)
+                localStorage.setItem('userAccessToken', response?.data?.accessToken)
+                dispatch(isUser(response?.data?.accessToken))
+                dispatch(addUserInfo(response?.data?.userInfo))
+                router.push('/');
+            } catch (error) {
+                console.log(error, "error in the login page");
+            }
+        }
+    }
+    const validateForm = () => {
+        let isValid = true;
+        const newErrors = {};
+
+        if (!data.email.trim()) {
+            newErrors.email = "Email is required";
+            isValid = false;
+        } else if (!/\S+@\S+\.\S+/.test(data.email)) {
+            newErrors.email = "Email is invalid";
+            isValid = false;
+        }
+
+        if (!data.password.trim()) {
+            newErrors.password = "Password is required";
+            isValid = false;
+        } else if (data.password.length < 4) {
+            newErrors.password = "Password should be at least 6 characters long";
+            isValid = false;
+        }
+
+        setErrors(newErrors);
+        return isValid;
+    };
+
     return (
         <Container component="main" maxWidth="md"   >
             <Box
@@ -63,7 +87,7 @@ export default function Login() {
                 <Typography component="h1" variant="h5" sx={{ fontSize: 24, fontWeight: 1000 }}>
                     Member login
                 </Typography>
-               
+
                 <Divider >Or Continue with</Divider>
                 <Box component="form" sx={{ paddingLeft: 20 }} onSubmit={handleLoginSubmit} >
                     <TextField
@@ -75,10 +99,11 @@ export default function Login() {
                         name="email"
                         autoComplete="email"
                         autoFocus
-                        
+
                         sx={{ width: "70%" }}
                         onChange={(e) => dispatch(setLoginEmail(e.target.value))}
-                       
+                        error={!!errors.email}
+                        helperText={errors.email}
                     />
 
                     <TextField
@@ -90,10 +115,11 @@ export default function Login() {
                         type="password"
                         id="password"
                         autoComplete="current-password"
-                     
+
                         sx={{ width: "70%" }}
-                        onChange={(e) => dispatch(setLoginPassword(e.target.value)) }
-                       
+                        onChange={(e) => dispatch(setLoginPassword(e.target.value))}
+                        error={!!errors.password}
+                        helperText={errors.password}
                     />
 
                     <Button type="submit" fullWidth variant="contained" sx={{ mt: 5, mb: 2, height: 60, width: "70%", backgroundColor: '#131392' }}  >
@@ -102,7 +128,7 @@ export default function Login() {
                     <Grid container justifyContent="space-around"
                         alignItems="center">
 
-                        <Link href="" variant="body2" sx={{marginLeft:-18}} onClick={()=> navigate('/')} >
+                        <Link href="" variant="body2" sx={{ marginLeft: -18 }} onClick={() => navigate('/')} >
                             {"Don't have an account? Sign Up"}
                         </Link>
 
@@ -120,7 +146,7 @@ export default function Login() {
                 alt=""
                 src="https://jobbox-nextjs-v3.vercel.app/assets/imgs/page/login-register/img-3.svg"
             />
-         
+
 
         </Container>
     );

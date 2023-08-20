@@ -1,7 +1,6 @@
 "use client"
 
-// Import necessary modules
-import React from "react";
+import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -11,12 +10,12 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
-
 import { useDispatch, useSelector } from "react-redux";
 import { SIGNUP_API } from "@/utils/baseUrl/methods/post.jsx";
 // import { useRouter } from 'next/router';
 import { useRouter } from "next/navigation";
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // Import Redux actions
 import {
   setName,
@@ -28,30 +27,66 @@ import {
 } from "../../app/redux-toolkit/registerReducer";
 
 export default function Signup() {
+  const [errors, setErrors] = useState({});
   const data = useSelector((state) => state.register);
   const dispatch = useDispatch();
   const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (validateForm()) {
+      try {
+        const response = await SIGNUP_API(data);
+        localStorage.setItem('userAccessToken', response?.data?.accessToken)
+        dispatch(isUser(response?.data?.accessToken))
+        dispatch(addUserInfo(response.data.userInfo))
+        toast.success('Registration successful!');
+        router.push('/');
+        // Handle success, redirection, etc.
+        // For example, you can redirect the user to a different page:
+        // router.push('/success');
 
-    try {
-      const response = await SIGNUP_API(data);
-      console.log(response.data.accessToken, "Response from signup");
-      console.log(response.data.userInfo,"llllllllllll");
-      localStorage.setItem('userAccessToken', response?.data?.accessToken)
-      dispatch(isUser(response?.data?.accessToken))
-      dispatch(addUserInfo(response.data.userInfo))
-      router.push('/'); 
-      // Handle success, redirection, etc.
-      // For example, you can redirect the user to a different page:
-      // router.push('/success');
-
-    } catch (error) {
-      console.log(error, "Error in signup response");
-      // Handle error, show error message to the user, etc.
+      } catch (error) {
+        console.log(error, "Error in signup response");
+        // Handle error, show error message to the user, etc.
+      }
     }
-  };
+  }
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = {};
 
+    if (!data.name.trim()) {
+      newErrors.name = "Name is required";
+      isValid = false;
+    }
+
+    if (!data.email.trim()) {
+      newErrors.email = "Email is required";
+      isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(data.email)) {
+      newErrors.email = "Email is invalid";
+      isValid = false;
+    }
+
+    if (!data.password.trim()) {
+      newErrors.password = "Password is required";
+      isValid = false;
+    } else if (data.password.length < 4) {
+      newErrors.password = "Password should be at least 6 characters long";
+      isValid = false;
+    }
+
+    if (!data.phone.trim()) {
+      newErrors.phone = "Phone is required";
+      isValid = false;
+    } else if (!/^\d{10}$/.test(data.phone)) {
+      newErrors.phone = "Phone is invalid";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
   return (
     <div>
       <Container component="main" maxWidth="md">
@@ -91,7 +126,7 @@ export default function Signup() {
           </Typography>
 
           <Typography
-            component="h1" variant="h5" sx={{ fontSize: 24, fontWeight: 1000,marginRight:10 }}
+            component="h1" variant="h5" sx={{ fontSize: 24, fontWeight: 1000, marginRight: 10 }}
           >
             Start for free Today
           </Typography>
@@ -114,7 +149,8 @@ export default function Signup() {
               autoFocus
               sx={{ width: "60%" }}
               onChange={(e) => dispatch(setName(e.target.value))}
-              
+              error={!!errors.name}
+              helperText={errors.name}
             />
             <TextField
               margin="normal"
@@ -127,7 +163,8 @@ export default function Signup() {
               autoFocus
               sx={{ width: "60%" }}
               onChange={(e) => dispatch(setEmail(e.target.value))}
-              
+              error={!!errors.email}
+              helperText={errors.email}
             />
             <TextField
               margin="normal"
@@ -140,8 +177,9 @@ export default function Signup() {
               autoFocus
               sx={{ width: "60%" }}
               onChange={(e) => dispatch(setPhone(e.target.value))}
-             
-              
+              error={!!errors.phone}
+              helperText={errors.phone}
+
             />
 
             <TextField
@@ -155,7 +193,8 @@ export default function Signup() {
               autoComplete="current-password"
               sx={{ width: "60%" }}
               onChange={(e) => dispatch(setPassword(e.target.value))}
-             
+              error={!!errors.password}
+              helperText={errors.password}
             />
             <Stack direction="row" spacing={2}>
               <Button
@@ -178,7 +217,7 @@ export default function Signup() {
               justifyContent="space-around"
               sx={{ marginLeft: -18 }}
             >
-              <Link  variant="body2" onClick={()=> navigate('/login')}>
+              <Link variant="body2" onClick={() => navigate('/login')}>
                 {"Don't have an account? Sign In"}
               </Link>
             </Grid>

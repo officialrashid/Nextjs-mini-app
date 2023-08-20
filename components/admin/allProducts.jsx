@@ -37,7 +37,6 @@ export default function CustomizedTables() {
     async function fetchProducts() {
       try {
         const getProductResponse = await GETALL_PRODUCT();
-        console.log(getProductResponse.data.products, "fbdnfbdnfndvfbdvfb");
         setProducts(getProductResponse.data.products);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -49,7 +48,7 @@ export default function CustomizedTables() {
 
   return (
     <><TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700,marginTop:3 }} aria-label="customized table">
+      <Table sx={{ minWidth: 700, marginTop: 3 }} aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell>Product Image</StyledTableCell>
@@ -74,8 +73,8 @@ export default function CustomizedTables() {
         </TableBody>
       </Table>
 
-    </TableContainer><Button variant="contained" disableElevation sx={{marginTop:3,width:"70%",marginLeft:24}} 
-    onClick={()=>  router.push('addProduct')}>
+    </TableContainer><Button variant="contained" disableElevation sx={{ marginTop: 3, width: "70%", marginLeft: 24 }}
+      onClick={() => router.push('addProduct')}>
         Add Product
       </Button></>
   );

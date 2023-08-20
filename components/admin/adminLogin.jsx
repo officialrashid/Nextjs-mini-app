@@ -10,8 +10,8 @@ import Divider from '@mui/material/Divider';
 
 
 function AdminLogin() {
-  
-   
+
+
   return (
     <Container component="main" maxWidth="md">
       <Box
@@ -54,7 +54,7 @@ function AdminLogin() {
             autoFocus
             sx={{ width: "70%" }}
             onChange={(e) => dispatch(setLoginEmail(e.target.value))}
-            
+
           />
 
           <TextField
@@ -68,7 +68,7 @@ function AdminLogin() {
             autoComplete="current-password"
             sx={{ width: "70%" }}
             onChange={(e) => dispatch(setLoginPassword(e.target.value))}
-           
+
           />
 
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 5, mb: 2, height: 60, width: "70%", backgroundColor: '#131392' }} >

@@ -32,18 +32,16 @@ import { useRouter } from 'next/navigation';
 const BuyProduct = () => {
     const [products, setProduct] = useState([]);
     const dispatch = useDispatch();
-    const router =  useRouter()
+    const router = useRouter()
     const address = useSelector((state) => state.order);
     const data = useSelector((state) => state.register);
-    const dataId = useSelector((state) => state.productId); 
+    const dataId = useSelector((state) => state.productId);
     const userId = data.userInfo._id
     const fetchProductDetails = async () => {
-        
-            
-            const productDetails = await GETPRODUCT_DETAILS(dataId);
-            setProduct([productDetails.data.product]);
-            console.log(productDetails, "coming to the response frontrnd buy product");
-        
+
+
+        const productDetails = await GETPRODUCT_DETAILS(dataId);
+        setProduct([productDetails.data.product]);
     };
 
     useEffect(() => {
@@ -51,15 +49,10 @@ const BuyProduct = () => {
     }, []);
 
     const handleOrderSubmit = async (e) => {
-    
+
         e.preventDefault();
-      
-        console.log("pppppppppppppp");
-        console.log(address, "=========================");
-        console.log(dataId, "============================");
-        console.log(userId, "==============================");
         const orderDetails = {
-            ids: data.productId  ,
+            ids: data.productId,
             userId: userId,
             address: address
         };
@@ -208,75 +201,75 @@ const BuyProduct = () => {
 
 
                         </div>
-                     
+
 
 
                     </Box>
                 </Box>
             </Grid>
             {products.length > 0 && products.map((product) => (
-            <Grid item xs={12} md={6}>
-                <Box sx={{ marginTop: 3, marginLeft: 5 }}>
-                    <Typography variant="h5">Your Order</Typography>
-                    <TableContainer>
-                        <Table>
-                            <TableBody>
-                                <TableRow>
-                                    <TableCell>Product Image</TableCell>
-                                    <TableCell>
-                                        <img src={product.image}  alt="Product" style={{ width: '100px' }} />
-                                    </TableCell>
-                                </TableRow>
+                <Grid item xs={12} md={6}>
+                    <Box sx={{ marginTop: 3, marginLeft: 5 }}>
+                        <Typography variant="h5">Your Order</Typography>
+                        <TableContainer>
+                            <Table>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>Product Image</TableCell>
+                                        <TableCell>
+                                            <img src={product.image} alt="Product" style={{ width: '100px' }} />
+                                        </TableCell>
+                                    </TableRow>
 
-                                <TableRow>
-                                    <TableCell>Product Name</TableCell>
-                                    <TableCell>{product.productName}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell>Category</TableCell>
-                                    <TableCell>{product.category}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell>Price</TableCell>
-                                    <TableCell>{product.price}</TableCell>
-                                </TableRow>
-                                {/* Repeat similar rows for each product */}
-                                <TableRow>
-                                    <TableCell>Shipping</TableCell>
-                                    <TableCell>Enter your address to view shipping options.</TableCell>
-                                </TableRow>
-                                <TableRow>
+                                    <TableRow>
+                                        <TableCell>Product Name</TableCell>
+                                        <TableCell>{product.productName}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell>Category</TableCell>
+                                        <TableCell>{product.category}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell>Price</TableCell>
+                                        <TableCell>{product.price}</TableCell>
+                                    </TableRow>
+                                    {/* Repeat similar rows for each product */}
+                                    <TableRow>
+                                        <TableCell>Shipping</TableCell>
+                                        <TableCell>Enter your address to view shipping options.</TableCell>
+                                    </TableRow>
+                                    <TableRow>
 
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell>Total</TableCell>
-                                    <TableCell>{product.price}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell>Payment Method</TableCell>
-                                    <RadioGroup >
-                            <FormControlLabel value="cashOnDelivery" control={<Radio />} label="Cash on Delivery" />
-                            {/* You can repeat similar FormControlLabel for "Use Your Wallet" */}
-                        </RadioGroup>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell>Total</TableCell>
+                                        <TableCell>{product.price}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell>Payment Method</TableCell>
+                                        <RadioGroup >
+                                            <FormControlLabel value="cashOnDelivery" control={<Radio />} label="Cash on Delivery" />
+                                            {/* You can repeat similar FormControlLabel for "Use Your Wallet" */}
+                                        </RadioGroup>
 
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Box>
-                <Button
-                    type="submit"
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2, height: 60, width: "56%", backgroundColor: '#131392', ml: 21 }}
-                    onClick={handleOrderSubmit}
-                >
-                    Submit
-                </Button>
-            </Grid>
-              ))}
-                 
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Box>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2, height: 60, width: "56%", backgroundColor: '#131392', ml: 21 }}
+                        onClick={handleOrderSubmit}
+                    >
+                        Submit
+                    </Button>
+                </Grid>
+            ))}
+
         </Grid>
-      
+
         // end add product front end *****//////
     );
 };

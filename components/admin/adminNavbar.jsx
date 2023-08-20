@@ -175,22 +175,22 @@ export default function PrimarySearchAppBar() {
           >
             MUI
           </Typography>
-          
-          <Search sx={{marginRight:15}}>
+
+          <Search sx={{ marginRight: 15 }}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
-              
+
             />
           </Search>
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: 'none', sm: 'block',marginLeft:50 } }}
+            sx={{ display: { xs: 'none', sm: 'block', marginLeft: 50 } }}
           >
             Home
           </Typography>
@@ -198,7 +198,7 @@ export default function PrimarySearchAppBar() {
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: 'none', sm: 'block',marginLeft:50 } }}
+            sx={{ display: { xs: 'none', sm: 'block', marginLeft: 50 } }}
           >
             Shop
           </Typography>
@@ -206,7 +206,7 @@ export default function PrimarySearchAppBar() {
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: 'none', sm: 'block',marginLeft:50 } }}
+            sx={{ display: { xs: 'none', sm: 'block', marginLeft: 50 } }}
           >
             Order
           </Typography>

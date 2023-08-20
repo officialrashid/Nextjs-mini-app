@@ -4,18 +4,18 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 import { useRouter } from 'next/navigation';
 const OrderSuccess = () => {
-    const router = useRouter()
+  const router = useRouter()
   return (
-    
+
     <div
-    
+
       style={{
         textAlign: 'center',
         padding: '40px 0',
         background: '#EBF0F5',
-        
+
       }}
-      
+
       className="card"
     >
       <div
@@ -63,9 +63,9 @@ const OrderSuccess = () => {
         <br />
         we'll be in touch shortly!
       </p>
-      <Button variant="contained" sx={{marginTop:3 ,marginLeft:5}} onClick={()=> router.push('/') } >
-            <AddShoppingCartIcon />
-              GO Home</Button >
+      <Button variant="contained" sx={{ marginTop: 3, marginLeft: 5 }} onClick={() => router.push('/')} >
+        <AddShoppingCartIcon />
+        GO Home</Button >
     </div>
   );
 };
