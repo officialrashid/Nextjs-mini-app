@@ -8,8 +8,36 @@
     ],
     "rewrites": [
       {
-        "source": "**",
-        "destination": "/index.html"
+        "source": "**/signup",
+        "destination": "/signup.html"
+      },
+      {
+        "source":"**/login",
+        "destination":"/login.html"
+      },
+      {
+        "source":"**/addProduct",
+        "destination":"/addProduct.html"      
+      },
+      {
+        "source":"**/adminLogin",
+        "destination":"/adminLogin.html"
+      },
+      {
+        "source":"**/allProduct",
+        "destination":"/allProduct.html"
+      },
+      {
+        "source":"**/buyProduct",
+        "destination":"/buyProduct.html"
+      },
+      {
+        "source":"**/orderSuccess",
+        "destination":"/orderSuccess.html"
+      },
+      {
+        "source":"**/productDetailPage",
+        "destination":"/productDetailPage.html"
       }
     ]
   }
