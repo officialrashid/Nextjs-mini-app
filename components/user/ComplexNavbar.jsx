@@ -200,7 +200,7 @@ export default function PrimarySearchAppBar() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block',marginLeft:50 } }}
           >
-            Shop
+            Shopping??
           </Typography>
           <Typography
             variant="h6"
