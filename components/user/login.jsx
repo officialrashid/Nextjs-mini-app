@@ -128,7 +128,7 @@ export default function Login() {
                     <Grid container justifyContent="space-around"
                         alignItems="center">
 
-                        <Link href="" variant="body2" sx={{ marginLeft: -18 }} onClick={() => navigate('/')} >
+                        <Link href="" variant="body2" sx={{ marginLeft: -18 }} onClick={()=>router.push('/signup')} >
                             {"Don't have an account? Sign Up"}
                         </Link>
 

@@ -8,6 +8,7 @@ import loginReducer from './loginReducer.jsx';
 import addProduct from './addProduct.jsx';
 import orderAddress from "../../app/redux-toolkit/orderAddress.jsx";
 import productId from './productId.jsx';
+import logoutReducer from './logoutReducer.jsx';
 const persistConfig = {
   key: 'root',
   storage,
@@ -20,7 +21,8 @@ const persistedReducer = persistReducer(
     login : loginReducer,
     addProduct: addProduct,
     order: orderAddress,
-    productId: productId
+    productId: productId,
+    logout: logoutReducer
   })
 );
 
